@@ -68,26 +68,26 @@ function curl_download($Url)
 	$temp=1;
 
 
-	for($c = 1; $c < $lengthArray; $c++)
+	for($c1 = 1; $c1 < $lengthArray; $c1++)
          {
 		
-		if(preg_match('/<option value="bachelor">/',$parts[$c],$matches2))		
+		if(preg_match('/<option value="bachelor">/',$parts[$c1],$matches2))		
 		{
 			//<option value="bachelor">
 			//echo nl2br ("loop div tag  $matches2[0] $c \n");
-			$c=400;
+			$c1=400;
 		}
 		
-                if(preg_match('/\b^bachelor+?\b/',$parts[$c],$matches2))
+                if(preg_match('/^\W*(?:\w+\b\W*){1,15}(?i)bachelor+?/',$parts[$c1],$matches2))
                 {
-                        echo nl2br ("-------------- $matches2[0]  ---------- $c \n");
+                        echo nl2br ("-------------- $matches2[0]  ---------- $c1 \n");
 
-				$temp=$c;			
+				$temp=$c1;			
 
-                                                for($d = $c; $d< $lengthArray; $d++)
+                                                for($d = $c1; $d< $lengthArray; $d++)
                                                 {
-                                                        //echo nl2br ("inside for d  \n");
-                                                        if(preg_match('/(?i)deposit|Deposit:|Deposit:.+?/',$parts[$d],$matches5))
+                                                        echo nl2br ("inside for d bach $d  \n");
+                                                        if(preg_match('/(?i)deposit|Deposit:+?/',$parts[$d],$matches5))
                                                         {
                                                                 echo nl2br ("$matches5[0] $d\n");
                                                                 if(preg_match('/\$\d+(?:\.\d+)?.*/',$parts[$d],$matches6))
@@ -99,7 +99,7 @@ function curl_download($Url)
                                                          }
                                                         break;
                                                 }
-						for($e = $c; $e< $lengthArray; $e++)
+						for($e = $c1; $e< $lengthArray; $e++)
                                                 {
                                                          //echo nl2br ("loops crazy  \n");
                                                         if(preg_match('/(?i)price|rent+?/',$parts[$e],$matches3))
@@ -119,7 +119,7 @@ function curl_download($Url)
                                                         }
 
                                                 }
-						for($f = $c; $f< $lengthArray; $f++)
+						for($f = $c1; $f< $lengthArray; $f++)
                                                 {
                                                         if(preg_match('/\b(?<!\d)(?i)bathrooms+?\b/',$parts[$f],$matches6))
                                                         {
@@ -135,11 +135,11 @@ function curl_download($Url)
                                                         }
 
                                                 }
-						for($g = $c; $g< $lengthArray; $g++)
+						for($g = $c1; $g< $lengthArray; $g++)
                                                 {
                                                         if(preg_match('/\b(?<!\d)(?i)square|sqft|frSqFt+?\b/',$parts[$g],$matches7))
                                                         {
-                                                                echo nl2br ("SQ  $matches7[0] $c \n");
+                                                                echo nl2br ("SQ  $matches7[0] $g \n");
                                                                 //print_r ($matches4[0] );
 
                                                                 if(preg_match('/(?<!\d)(\d+)(\d+)(?!\d)/',$parts[$g],$matches))
@@ -173,7 +173,7 @@ function curl_download($Url)
 
                                                 for($d = $c2; $d< $lengthArray; $d++)
                                                 {
-                                                        //echo nl2br ("inside for d  \n");
+                                                        echo nl2br ("inside for d $d  \n");
                                                         if(preg_match('/(?i)deposit|Deposit:|Deposit:.+?/',$parts[$d],$matches5))
                                                         {
                                                                 echo nl2br ("$matches5[0]  $d \n");
@@ -345,7 +345,7 @@ function curl_download($Url)
 			if(preg_match('/\b[3].(?i)bedroom|Bedrooms:.[3]|bedroom.[3]+?\b/',$parts[$c],$matches2))
         		{
                         	echo nl2br ("-------------- $matches2[0] ---------- $c \n");
-                                                for($h3 = $c; $d< $lengthArray; $h3++)
+                                                for($h3 = $c; $h< $lengthArray; $h3++)
                                                 {
                                                         //echo nl2br ("inside for d \n");
                                                         if(preg_match('/(?i)deposit|Deposit:+?/',$parts[$h3],$matches5))
