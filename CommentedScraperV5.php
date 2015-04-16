@@ -1,16 +1,16 @@
 <?php
 
-curl_download('http://www.bwalk.com/en-CA/Rent/Details/Alberta/Edmonton/Fairmont-Village/');
+//curl_download('http://www.bwalk.com/en-CA/Rent/Details/Alberta/Edmonton/Fairmont-Village/');
 
-curl_download('http://www.bwalk.com/en-CA/Rent/Details/Alberta/Edmonton/Meadowview-Manor/');
+//curl_download('http://www.bwalk.com/en-CA/Rent/Details/Alberta/Edmonton/Meadowview-Manor/');
 
 //curl_download('http://www.har-par.com/properties.php?PropertyID=6');
 
-//curl_download('http://www.har-par.com/properties.php?PropertyID=141');
+curl_download('http://www.har-par.com/properties.php?PropertyID=141');
 
 //curl_download('http://www.rentmidwest.com/property/village-southgate');
 
-curl_download('http://www.rentedmonton.com/Detail.aspx?prop=d46d9fab-d7bf-43e9-bf2e-c73ee30f26a1');
+//curl_download('http://www.rentedmonton.com/Detail.aspx?prop=d46d9fab-d7bf-43e9-bf2e-c73ee30f26a1');
 
 //curl_download('https://www.broadstreet.ca/property/131/Merecroft+Gardens/');
 
@@ -48,7 +48,7 @@ function curl_download($Url)
         $lengthArray = count($parts);    
 		$temp=1;
 		
-		//print_r($parts);
+	//	print_r($parts);
 
 			/*This loop will find details of Bachelor suites from all the websites. Once it matches, it will run internal for loops to find number of bathrooms, deposit and rental price*/
 		for($c1 = 1; $c1 < $lengthArray; $c1++)
@@ -59,17 +59,16 @@ function curl_download($Url)
 				$c1=400;
 			}
 		
-            if(preg_match('/^\W*(?:\w+\b\W*){1,15}(?i)Bachelor:|bachelor+?/',$parts[$c1],$matches2))
+            if(preg_match('/^\W*(?:\w+\b\W*){1,15}bach|Bachelor/',$parts[$c1],$matches2))
             {
                 echo nl2br ("-------------- $matches2[0]  ---------- $c1 \n");
-				$temp=$c1;			
-					
+									
 					/*This for loop will search for the deposit price. Once it finds it, it will break the loop.*/
                 for($d = $c1; $d< $lengthArray; $d++)
                {
                     if(preg_match('/(?i)deposit|Deposit:+?/',$parts[$d],$matches5))
                     {
-                        if(preg_match('/\$\d+(?:\.\d+)?.*/',$parts[$d],$matches6))
+                        if(preg_match('/\$\d+(?:\.\d+)?./',$parts[$d],$matches6))
                         {
                             echo nl2br ("Deposit :  $matches6[0] $d \n");
                             break;
@@ -84,7 +83,7 @@ function curl_download($Url)
                     {
                         for($i = $e; $i < $lengthArray; $i++)
                         {
-                            if(preg_match('/\$\d+(?:\.\d+)?.*/',$parts[$i],$matches4))
+                            if(preg_match('/\$\d\,\d+|\$\d+(?:\.\d+)?.*/',$parts[$i],$matches4))
                             {
                                 echo nl2br ("Price : $matches4[0] $i \n");                                         
                                 break ;
@@ -108,7 +107,7 @@ function curl_download($Url)
 				}
                  	
 					/*This for loop will search for the size of the property. Once it finds it, it will break the loop.*/			           
-				for($g = $c1; $g< $lengthArray; $g++)
+				for($g = $c1; $g < $lengthArray; $g++)
                 {
                     if(preg_match('/\b(?<!\d)(?i)Area|square|sqft|frSqFt+?\b/',$parts[$g],$matches7))
                     {
@@ -118,31 +117,33 @@ function curl_download($Url)
                             break;
                         }
                     }
+					$temp = $g;
                 }
 					/*Breaks the if loop after it has executed all the statements within or if they do not match the if conditions*/
                 break;
 			}
 				/*End of for loop that searches for the Bachelor suite*/
 		}
-
+			
 				/*Second Main for Loop that finds details of 1 BDRM properties */
+				
 			for($c2 = $temp; $c2 < $lengthArray; $c2++)
 			{
 				if(preg_match('/<option value="bachelor">/',$parts[$c2],$matches2))
                 {   
                     $c2=400;
                 }
-	
-				if(preg_match('/\b^[1].(?i)bedroom|Bedrooms:.[1]|bedroom.[1]|[1].bedroom+?\b/',$parts[$c2],$matches2))
+				
+				if(preg_match('/\b^[1].(?i)bedroom|Bedrooms:.[1]|^[1].Bedroom|[1].bdrm|bedroom.[1]|[1].bedroom+?\b/',$parts[$c2],$matches2))
 				{
 					echo nl2br ("-------------- $matches2[0]  ---------- $c2 \n");
-			        
-						/*This for loop will search for the deposit price. Once it finds it, it will break this loop.*/
-					for($d = $c2; $d< $lengthArray; $d++)
+			
+					/*This for loop will search for the deposit price. Once it finds it, it will break this loop.*/
+					for($d = $c2; $d < $lengthArray; $d++)
                     {
                         if(preg_match('/(?i)deposit|Deposit:+?/',$parts[$d],$matches5))
                         {
-                            if(preg_match('/\$\d+(?:\.\d+)?.|\b\d+(?:\.\d+)\b/',$parts[$d],$matches6))
+                            if(preg_match('/\$\d\,\d+|\$\d+(?:\.\d+)?.+/',$parts[$d],$matches6))
                             {
 								echo nl2br ("Deposit :  $matches6[0] $d \n");
                                 break;
@@ -157,7 +158,7 @@ function curl_download($Url)
                         {
                             for($i = $e; $i < $lengthArray; $i++)
                             {
-                                if(preg_match('/\$\d+(?:\.\d+)?.*',$parts[$i],$matches4))
+                                if(preg_match('/\$\d\,\d+|\$\d+(?:\.\d+)?.*/',$parts[$i],$matches4))
                                 {
                                     echo nl2br ("Price: $matches4[0] $i \n");
                                     break ;
@@ -183,15 +184,16 @@ function curl_download($Url)
 						/*This for loop will search for the size of the property. Once it finds it, it will break the loop.*/			           
 					for($g = $c2; $g< $lengthArray; $g++)
                     {
-                        if(preg_match('/\b(?<!\d)(?i)area:|square|sqft|frSqFt+?\b/',$parts[$g],$matches7))
+                        if(preg_match('/\b(?<!\d)(?i)Area:|square|sqft|frSqFt+?\b/',$parts[$g],$matches7))
                         {
 						    if(preg_match('/(\d+-?)+\d+|(?<!\d)(\d+)(\d+)(?!\d)/',$parts[$g],$matches))
                             {
                                 echo nl2br ("Square Feet :  $matches[0] $g \n");
-                                break;
+								$temp = $g;
+								break;
                             }
                         }
-                    }
+					}
 						/*Breaks the if loop after it has executed all the statements within or if they do not match the if conditions*/
 					break;
 				}
@@ -207,7 +209,7 @@ function curl_download($Url)
                         $c=500;
                 }
 		
-				if(preg_match('/\b[2].(?i)bedroom|Bedrooms:.[2]|bedroom.[2]|[2].bed+?\b/',$parts[$c],$matches2))
+				if(preg_match('/\b[2].(?i)bedroom|[2].bdrm|Bedrooms:.[2]|bedroom.[2]|[2].bed+?\b/',$parts[$c],$matches2))
                 {
                     echo nl2br ("-------------- $matches2[0]  ---------- $c \n");
 						
@@ -216,7 +218,7 @@ function curl_download($Url)
                     {
                         if(preg_match('/(?i)deposit|Deposit:+?/',$parts[$h],$matches5))
 						{
-							if(preg_match('/\$\d+(?:\.\d+)?.|\b\d+(?:\.\d+)\b/',$parts[$h],$matches6))
+							if(preg_match('/\$\d\,\d+|\$\d+(?:\.\d+)?.+/',$parts[$h],$matches6))
                             {
                                 echo nl2br ("Deposit :  $matches6[0] $h \n");
                                 break;
@@ -231,7 +233,7 @@ function curl_download($Url)
                         {
 							for($k = $j; $k < $lengthArray; $k++)
                             {
-                                if(preg_match('/\$\d+(?:\.\d+)?.|\b\d+(?:\.\d+)\b/',$parts[$k],$matches4))
+                                if(preg_match('/\$\d\,\d+|\$\d+(?:\.\d+)?.+/',$parts[$k],$matches4))
                                 {
                                     echo nl2br ("Price : $matches4[0] $k \n");
                                     break ;
@@ -270,8 +272,9 @@ function curl_download($Url)
 						break;
                         }
                     }
+					
 							/*Breaks the if loop after it has executed all the statements within or if they do not match the if conditions*/
-                break;
+					break;
 				}
 							/*End of for loop that searches for the 2BDRM suite*/
 			}
@@ -307,10 +310,9 @@ function curl_download($Url)
                     {
 						if(preg_match('/(?i)rate|price+|rent?/',$parts[$j3],$matches3))
                         {
-                            echo nl2br ("$matches3[0] \n");
                             for($k3 = $j3; $k3 < $lengthArray; $k3++)
                             {
-								if(preg_match('/\$\d+(?:\.\d+)?.*/',$parts[$k3],$matches4))
+								if(preg_match('/\$\d\,\d|\$\d+(?:\.\d+)?.+/',$parts[$k3],$matches4))
                                 {
                                     echo nl2br ("Price : $matches4[0] $j3 \n");
                                     break ;
@@ -321,7 +323,7 @@ function curl_download($Url)
                     }
                                                
 						/*This for loop will search for the number of bathrooms. Once it finds it, it will break the loop.*/	
-					for($l3 = $c; $l3< $lengthArray; $l3++)
+					for($l3 = $c; $l3 < $lengthArray; $l3++)
                     {
                         if(preg_match('/\b(?<!\d)(?i)Bath|bathrooms+?\b/',$parts[$l3],$matches6))
                         {
@@ -347,6 +349,7 @@ function curl_download($Url)
                             }
                         }
                     }
+					
 						/*Breaks the if loop after it has executed all the statements within or if they do not match the if conditions*/
 				break;
 				}
