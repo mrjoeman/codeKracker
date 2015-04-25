@@ -2,18 +2,15 @@
 
 	$DB = "Kelson_test";
         $USER = "root";
-        $PASS = "root";
+        $PASS = "";
 
 class dbconnect
 {	
 
-	//$DB = "Kelson_test";
-	//$USER = "root";
-	//$PASS = "root";
 
 	function store($string)
 	{
-		$accounts = mysql_connect("localhost", "root", "root")
+		$accounts = mysql_connect("localhost", "root", "")
 			or die(mysql_error());
 		mysql_set_charset('utf8',$accounts);
 		mysql_select_db("Kelson_test", $accounts);
@@ -29,19 +26,20 @@ class dbconnect
 	function get($timeStamp)
 	{
 	
-		$accounts = mysql_connect("localhost", "root", "root")
+		$accounts = mysql_connect("localhost", "root", "")
                         or die(mysql_error());
-		mysql_set_charset('utf8',$accounts);
+	//	mysql_set_charset('utf8',$accounts);
                 mysql_select_db("Kelson_test", $accounts);
 
 
 		$q1 = mysql_query("SELECT * FROM scraped_data WHERE TIME>='$timeStamp'")or die (mysql_error());
-		//$qData = mysql_fetch_array($q1);
+		
 		
 		if($q1 == false)
 		{
-   		user_error("Query failed: " . mysql_error() . "<br />\n$query");
+			user_error("Query failed: " . mysql_error() . "<br />\n$query");
 		}
+		
 		elseif(mysql_num_rows($q1) == 0)
 		{
    			echo "<p>Sorry, no rows were returned by your query.</p>\n";
@@ -50,29 +48,20 @@ class dbconnect
 		{
    			while($query_row = mysql_fetch_assoc($q1))
    			{
-      				foreach($query_row as $key => $value)
-      				{
-         				echo "$key: $value<br />\n";
+      			foreach($query_row as $key => $value)
+      			{
+         			echo "$key: $value<br />\n";
 					if($key == "DATA")
 					{
 						return $value;
 					}
       				}
-     	 		echo "<br />\n";
-			
-   			}
+     	 	echo "<br />\n";
+			}
 		}  
 
 
-		//$row = mysql_fetch_row($q1);
-		//$showData = $row[2];
-
-		//return $qData;
-		//if(!mysql_query($sql, $accounts))
-                //{
-                //        die('Error: ' .mysql_error());
-                //}
-
+		
 
 	}
 }

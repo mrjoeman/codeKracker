@@ -18,20 +18,10 @@ $string = json_encode($finalarray);
 
 $dbconnect = new dbconnect;
 $status = ($dbconnect -> store($string));
+$data1 = ($dbconnect -> get($timeStamp));
 
-	//function dataByTimeStamp($ts)
-	//{
-		//$timeStamp = "2015-04-20 13:33:16";
-		$timeStamp = "2015-04-22 12:25:01";
-		$data1 = ($dbconnect -> get($timeStamp));
-		$utf8_data = utf8_encode($data1);
-		$emp_data = json_decode($utf8_data);
-		var_dump($emp_data);
-		//echo $emp_data->DATA;
-		//$bwalk1Rent = $emp_data->Bwalk1->Fairmont->1BD->Rent;
-		//print_r($bwalk1Rent);
-		print_r($emp_data);
-		//print_r($data1);
-	//}
+
+
+	
 
 ?>
