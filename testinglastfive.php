@@ -1,16 +1,9 @@
 <?php
-	
-	include ("Controlller.php");
-	
-	
-	$accounts = mysql_connect("localhost", "root", "")
-			or die(mysql_error());
-		mysql_select_db("Kelson_test", $accounts);
+	include ("Controlller.php");	
+	$accounts = mysql_connect("localhost", "root", "root")or die(mysql_error());
+	mysql_select_db("Kelson_test", $accounts);
 		
-	$sql = mysql_query("SELECT Kelson_test.scraped_data.Report_ID, Kelson_test.scraped_data.Timestamp
-				FROM Kelson_test.scraped_data
-					ORDER BY Kelson_test.scraped_data.Report_ID DESC 
-							LIMIT 5")or die('Error: ' .mysql_error());
+	$sql = mysql_query("SELECT id , TIME FROM scraped_data ORDER BY id DESC LIMIT 5")or die('Error: ' .mysql_error());
 		 
 	$t = array();
 	$r = array();
@@ -21,13 +14,13 @@
 		{
 			foreach($row as $key => $value)
 			{
-				if($key == "Report_ID")
+				if($key == "id")
 				{
 					$j++;
 					$r[$j] = $value;
 				}
 					
-				if($key == "Timestamp")
+				if($key == "TIME")
 				{
 					$i++;
 					$t[$i] = $value;
