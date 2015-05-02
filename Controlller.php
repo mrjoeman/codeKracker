@@ -7,14 +7,11 @@
 	{
 		$okay = new Controlller;
 		$okay -> callme();
-		//$name = $_POST['yes'];
-		//if($name $_POST['yes'])
-		//{
+	
 			// To redirect form on a particular page
 			header("Location:http://192.168.254.129/testinglastfive.php", false);
 			die();
-			//exit;
-		//}
+			
 	}
 
 	class Controlller
@@ -22,15 +19,12 @@
 
 		function redirect()
 		{
-			//ob_end_clean();
-			//ob_start();
-			//window.location = " http://192.168.254.129/testinglastfive.php";
+			
 			header("Location: http://192.168.254.129/testinglastfive.php", true);
                         die();
-			//ob_end_flush();
-                        //exit;
 
 		}
+		
 		function callmeautomatically()
 		{
 			$scraper = new Scraper;
@@ -63,6 +57,7 @@
 			$dbconnect -> store($string);
 		
 		}
+		
 		function callme()
 		{
 		$scraper = new Scraper;
@@ -93,9 +88,6 @@
 	
 		$dbconnect = new dbconnect;
 		$dbconnect -> store($string);
-		
-		//header("Location: http://192.168.254.129/testinglastfive.php");
-		//die();
 		}
 
 
@@ -107,7 +99,7 @@
 			return ($jsontoarray);
 		}
 	}
-	//}
+	
 	$Controlller = new Controlller();
    	$Controlller->callme();	
 

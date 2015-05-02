@@ -16,7 +16,6 @@
 		$data = $ok -> display($timestamp);
 	}
 	
-	//print_r($data);
 	?>
 <div id="base">
     <div id="block">
