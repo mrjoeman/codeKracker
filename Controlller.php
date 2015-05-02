@@ -25,6 +25,7 @@
 
 		}
 		
+			/*Function that will scrape and store when called using a cron job*/
 		function callmeautomatically()
 		{
 			$scraper = new Scraper;
@@ -58,6 +59,7 @@
 		
 		}
 		
+			/* Function that will scrape and store when the scrape data button is pressed*/
 		function callme()
 		{
 		$scraper = new Scraper;
@@ -90,7 +92,7 @@
 		$dbconnect -> store($string);
 		}
 
-
+			/*Accepts timestamp and displays report associated with that timestamp */
 		function display($timeStamp)
 		{	
 			$report = new report;
@@ -100,7 +102,6 @@
 		}
 	}
 	
-	$Controlller = new Controlller();
-   	$Controlller->callme();	
+	
 
 ?>
